@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "256021315213",
+    "project_id": "roaddocmanagement-280b0",
+    "storage_bucket": "roaddocmanagement-280b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256021315213:android:ec9aa6c36fd50e15b8ecc4",
+        "android_client_info": {
+          "package_name": "com.example.roaddocmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256021315213-d2rb9if0i27694d9hlfau4efakl08vkm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8nyU9qzRtB9JlxiYt8ok1fWNAgd-K_ag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256021315213-d2rb9if0i27694d9hlfau4efakl08vkm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

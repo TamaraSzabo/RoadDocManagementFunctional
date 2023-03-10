@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">RoadDocManagement</string>
+    <string name="image_content_description">image</string>
+    <string name="aplicatie_rutiera">Aplicatie Rutiera</string>
+    <string name="let_s_get_started_text">Let\'s get started!</string>
+    <string name="intro_text_description">Efficiently store and manage all
+        your road documents with simplicity and safety.</string>
+    <string name="register">REGISTER</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="register_description_text">Enter your name, email id and password, to register with us.</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="sing_in_description_text">Enter your name, email id and password , to register with us.</string>
+    <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
+    <string name="please_wait">Please Wait…</string>
+</resources>
