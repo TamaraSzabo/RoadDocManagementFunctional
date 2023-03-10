@@ -5,21 +5,22 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
 import com.example.roaddocmanagement.R
+import com.example.roaddocmanagement.databinding.ActivitySignInBinding
 
 @Suppress("DEPRECATION")
 class SignInActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySignInBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        val toolbarSignInActivity =
-            findViewById<androidx.appcompat.widget.Toolbar?>(R.id.toolbar_sign_in_activity)
-        setupActionBar(toolbarSignInActivity)
+        setupActionBar(binding.toolbarSignInActivity)
     }
 
     private fun setupActionBar(toolbar: Toolbar) {
@@ -31,6 +32,6 @@ class SignInActivity : AppCompatActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
         }
 
-        toolbar.setNavigationOnClickListener{onBackPressed()}
+        toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 }

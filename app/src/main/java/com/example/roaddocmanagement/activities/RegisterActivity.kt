@@ -3,26 +3,25 @@ package com.example.roaddocmanagement.activities
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.roaddocmanagement.R
+import com.example.roaddocmanagement.databinding.ActivityRegisterBinding
 
 @Suppress("DEPRECATION")
 class RegisterActivity : BaseActivity() {
+    private lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        val toolbarSignUpActivity =
-            findViewById<Toolbar?>(R.id.toolbar_register_activity)
-        setupActionBar(toolbarSignUpActivity)
+        setupActionBar(binding.toolbarRegisterActivity)
     }
 
     private fun setupActionBar(toolbar: Toolbar) {
@@ -36,19 +35,15 @@ class RegisterActivity : BaseActivity() {
 
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        val btnRegister = findViewById<Button>(R.id.btn_register_registration)
-        btnRegister.setOnClickListener{
+        binding.btnRegisterRegistration.setOnClickListener {
             registerUser()
         }
     }
 
     private fun registerUser() {
-        val etName = findViewById<EditText>(R.id.et_name)
-        val etEmail = findViewById<EditText>(R.id.et_email)
-        val etPassword = findViewById<EditText>(R.id.et_password)
-        val name: String = etName.text.toString().trim { it <= ' ' }
-        val email: String = etEmail.text.toString().trim { it <= ' ' }
-        val password: String = etPassword.text.toString().trim { it <= ' ' }
+        val name: String = binding.etName.text.toString().trim { it <= ' ' }
+        val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
+        val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
         if (validateForm(name, email, password)) {
             Toast.makeText(

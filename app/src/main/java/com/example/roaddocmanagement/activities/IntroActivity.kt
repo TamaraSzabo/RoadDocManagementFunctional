@@ -1,19 +1,17 @@
 package com.example.roaddocmanagement.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Button
-import com.example.roaddocmanagement.R
+import com.example.roaddocmanagement.databinding.ActivityIntroBinding
 
 @Suppress("DEPRECATION")
-class IntroActivity : BaseActivity()  {
+class IntroActivity : BaseActivity() {
+    private lateinit var binding: ActivityIntroBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro)
-        val btnRegister = findViewById<Button>(R.id.btn_register_intro)
-        val btnSingIn = findViewById<Button>(R.id.btn_sign_in_intro)
+        binding = ActivityIntroBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -21,11 +19,12 @@ class IntroActivity : BaseActivity()  {
         )
         val intentRegister = Intent(this, RegisterActivity::class.java)
         val intentSingIn = Intent(this, SignInActivity::class.java)
-        btnRegister.setOnClickListener {
+
+        binding.btnRegisterIntro.setOnClickListener {
             startActivity(intentRegister)
         }
 
-        btnSingIn.setOnClickListener {
+        binding.btnSignInIntro.setOnClickListener {
             startActivity(intentSingIn)
         }
     }
