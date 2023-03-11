@@ -24,7 +24,6 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun showProgressDialog(text: String) {
-
         mProgressDialog = Dialog(this)
 
         /*Set the screen content from layout resource.

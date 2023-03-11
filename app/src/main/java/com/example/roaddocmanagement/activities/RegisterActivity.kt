@@ -7,6 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.roaddocmanagement.R
 import com.example.roaddocmanagement.databinding.ActivityRegisterBinding
+import com.example.roaddocmanagement.firebase.FirestoreClass
+import com.example.roaddocmanagement.models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 @Suppress("DEPRECATION")
 class RegisterActivity : BaseActivity() {
@@ -22,6 +26,18 @@ class RegisterActivity : BaseActivity() {
         )
 
         setupActionBar(binding.toolbarRegisterActivity)
+    }
+
+    fun userRegisteredSuccess() {
+        Toast.makeText(
+            this,
+            " you have successfully registered ",
+            Toast.LENGTH_LONG
+        ).show()
+        hideProgressDialog()
+        FirebaseAuth.getInstance().signOut()
+        finish()
+
     }
 
     private fun setupActionBar(toolbar: Toolbar) {
@@ -46,11 +62,18 @@ class RegisterActivity : BaseActivity() {
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
 
         if (validateForm(name, email, password)) {
-            Toast.makeText(
-                this@RegisterActivity,
-                "Now we can register a new user.",
-                Toast.LENGTH_SHORT
-            ).show()
+            showProgressDialog(resources.getString(R.string.please_wait))
+            FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
+                        val registeredEmail = firebaseUser.email!!
+                        val user = User(firebaseUser.uid, name, registeredEmail)
+                        FirestoreClass().registerUser(this, user)
+                    } else {
+                        Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
         }
     }
 
