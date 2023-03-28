@@ -4,11 +4,15 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class User(
+
+    //TODO: functionality of adding the address and date of birth to the user and displaying it in My Profile
     val id: String = "",
     val name: String = "",
     val email: String = "",
     val image: String = "",
     val mobile: Long = 0,
+   // val dateOfBirth: String,
+    //val address: String = "",
     val fcmToken:String = ""
         ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -18,8 +22,7 @@ data class User(
         parcel.readString()!!,
         parcel.readLong(),
         parcel.readString()!!
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
@@ -27,6 +30,8 @@ data class User(
         parcel.writeString(email)
         parcel.writeString(image)
         parcel.writeLong(mobile)
+        //parcel.writeString(dateOfBirth)
+        //parcel.writeString(address)
         parcel.writeString(fcmToken)
     }
 

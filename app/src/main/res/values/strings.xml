@@ -20,4 +20,19 @@
     <string name="nav_my_profile">My profile</string>
     <string name="nav_sign_out">Sign Out</string>
 
+    <string name="mobile">Mobile</string>
+    <string name="update">UPDATE</string>
+    <string name="my_profile">My Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="address">Address</string>
+    <string name="full_address">City, street, number</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="full_date_of_birth">dd/mm/yyyy</string>
+
+    <string name="create_board_title">Create Board</string>
+    <string name="create">CREATE</string>
+    <string name="board_name">Board Name</string>
+    <string name="floating_add_button">Floating ADD button</string>
+
+
 </resources>

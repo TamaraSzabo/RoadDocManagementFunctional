@@ -2,7 +2,9 @@ package com.example.roaddocmanagement.firebase
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import com.example.roaddocmanagement.activities.MainActivity
+import com.example.roaddocmanagement.activities.MyProfileActivity
 import com.example.roaddocmanagement.activities.RegisterActivity
 import com.example.roaddocmanagement.activities.SignInActivity
 import com.example.roaddocmanagement.models.User
@@ -20,12 +22,32 @@ class FirestoreClass {
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 activity.userRegisteredSuccess()
-            }.addOnFailureListener { e ->
+            }.addOnFailureListener {
                 Log.e(activity.javaClass.simpleName, "Error registering the account")
             }
     }
 
-    fun signInUser(activity: Activity) {
+    fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
+                Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+                activity.profileUpdateSuccess()
+            }.addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board.",
+                    e
+                )
+                Toast.makeText(activity, "Error when updating the profile!", Toast.LENGTH_SHORT)
+                    .show()
+            }
+    }
+
+    fun loadUserData(activity: Activity) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .get()
@@ -39,9 +61,13 @@ class FirestoreClass {
                     is MainActivity -> {
                         activity.updateNavigationUserDetails(loggedInUser)
                     }
+                    is MyProfileActivity -> {
+                        activity.setUserDataInUI(loggedInUser)
+                    }
+
                 }
 
-            }.addOnFailureListener { e ->
+            }.addOnFailureListener {
                 when (activity) {
                     is SignInActivity -> {
                         activity.hideProgressDialog()
@@ -56,7 +82,7 @@ class FirestoreClass {
     }
 
     fun getCurrentUserId(): String {
-        var currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserId = ""
 
         if (currentUser != null) {
