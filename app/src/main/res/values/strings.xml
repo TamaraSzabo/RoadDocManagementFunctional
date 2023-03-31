@@ -33,6 +33,7 @@
     <string name="create">CREATE</string>
     <string name="board_name">Board Name</string>
     <string name="floating_add_button">Floating ADD button</string>
+    <string name="image_contentDescription" />
 
 
 </resources>

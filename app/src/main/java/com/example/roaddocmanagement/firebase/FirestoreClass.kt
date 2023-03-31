@@ -3,10 +3,8 @@ package com.example.roaddocmanagement.firebase
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
-import com.example.roaddocmanagement.activities.MainActivity
-import com.example.roaddocmanagement.activities.MyProfileActivity
-import com.example.roaddocmanagement.activities.RegisterActivity
-import com.example.roaddocmanagement.activities.SignInActivity
+import com.example.roaddocmanagement.activities.*
+import com.example.roaddocmanagement.models.Board
 import com.example.roaddocmanagement.models.User
 import com.example.roaddocmanagement.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -24,6 +22,27 @@ class FirestoreClass {
                 activity.userRegisteredSuccess()
             }.addOnFailureListener {
                 Log.e(activity.javaClass.simpleName, "Error registering the account")
+            }
+    }
+
+    fun createBoard(activity: CreateBoardActivity, board: Board) {
+        mFireStore.collection(Constants.BOARDS)
+            .document()
+            .set(board, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "Board created successfully.")
+                Toast.makeText(
+                    activity,
+                    "Board created successfully.", Toast.LENGTH_LONG
+                ).show()
+                activity.boardCreatedSuccessfully()
+            }.addOnFailureListener { exception ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board.",
+                    exception
+                )
             }
     }
 

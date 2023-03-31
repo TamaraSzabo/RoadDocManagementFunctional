@@ -26,10 +26,6 @@ import java.io.IOException
 class MyProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityMyProfileBinding
 
-    companion object {
-        private const val READ_STORAGE_PERMISSION_CODE = 1
-        private const val PICK_IMAGE_REQUEST_CODE = 2
-    }
 
     private var mSelectedImageFileUri: Uri? = null
     private var mProfileImageURL: String = ""
@@ -48,12 +44,12 @@ class MyProfileActivity : BaseActivity() {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED
             ) {
-                showImageChooser()
+                Constants.showImageChooser(this)
             } else {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_STORAGE_PERMISSION_CODE
+                    Constants.READ_STORAGE_PERMISSION_CODE
                 )
             }
         }
@@ -75,11 +71,11 @@ class MyProfileActivity : BaseActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == READ_STORAGE_PERMISSION_CODE) {
+        if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty()
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED
             ) {
-                showImageChooser()
+                Constants.showImageChooser(this)
             }
         } else {
             Toast.makeText(
@@ -90,19 +86,12 @@ class MyProfileActivity : BaseActivity() {
         }
     }
 
-    private fun showImageChooser() {
-        val galleryIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
-    }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK
-            && requestCode == PICK_IMAGE_REQUEST_CODE
+            && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
             && data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
@@ -122,9 +111,9 @@ class MyProfileActivity : BaseActivity() {
     }
 
     private fun setupActionBar() {
-        val toolbarMyProfileActivity =
-            findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_my_profile_activity)
-        setSupportActionBar(toolbarMyProfileActivity)
+        //val toolbarMyProfileActivity =
+        //findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_my_profile_activity)
+        setSupportActionBar(binding.toolbarMyProfileActivity)
 
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -132,7 +121,7 @@ class MyProfileActivity : BaseActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
             actionBar.title = resources.getString(R.string.my_profile)
         }
-        toolbarMyProfileActivity.setNavigationOnClickListener {
+        binding.toolbarMyProfileActivity.setNavigationOnClickListener {
             onBackPressed()
         }
     }
@@ -182,7 +171,7 @@ class MyProfileActivity : BaseActivity() {
         if (mSelectedImageFileUri != null) {
             val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
                 "USER_IMAGE" + System.currentTimeMillis()
-                        + "." + getFileExtension(mSelectedImageFileUri)
+                        + "." + Constants.getFileExtension(this, mSelectedImageFileUri)
             )
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener { taskSnapshot ->
                 Log.i(
@@ -206,10 +195,6 @@ class MyProfileActivity : BaseActivity() {
         }
     }
 
-    private fun getFileExtension(uri: Uri?): String? {
-        return MimeTypeMap.getSingleton()
-            .getMimeTypeFromExtension(contentResolver.getType(uri!!))
-    }
 
     fun profileUpdateSuccess() {
         hideProgressDialog()
