@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splashbackground"
+    android:background="@color/background_black"
     android:orientation="vertical"
     tools:context=".activities.RegisterActivity">
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/card_view_layout_content_padding"
-                android:background="@drawable/splashbackground">
+                android:background="@color/background_black">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tv_name_label"

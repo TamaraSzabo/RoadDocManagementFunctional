@@ -23,7 +23,6 @@ class SplashActivity : AppCompatActivity() {
         )
 
         val typeFace: Typeface = Typeface.createFromAsset(assets, "HoyleVariablePERSONAL.ttf")
-        binding.viewAppName.typeface = typeFace
 
         Handler().postDelayed({
             var currentUserId = FirestoreClass().getCurrentUserId()

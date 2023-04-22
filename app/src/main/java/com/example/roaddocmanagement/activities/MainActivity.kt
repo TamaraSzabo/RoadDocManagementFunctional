@@ -5,13 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.roaddocmanagement.R
+import com.example.roaddocmanagement.adapters.BoardItemsAdapter
 import com.example.roaddocmanagement.firebase.FirestoreClass
+import com.example.roaddocmanagement.models.Board
 import com.example.roaddocmanagement.models.User
 import com.example.roaddocmanagement.utils.Constants
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,10 +24,11 @@ import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 
 
+@Suppress("DEPRECATION")
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-
     companion object {
         const val MY_PROFILE_REQUEST_CODE: Int = 11
+        const val CREATE_BOARD_REQUEST_CODE: Int = 12
     }
 
     private lateinit var mUserName: String
@@ -32,21 +37,55 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setupActionBar()
+
         val navView = findViewById<NavigationView>(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
-        val drawerLayout =
-            findViewById<DrawerLayout>(R.id.drawer_layout)
 
-        FirestoreClass().loadUserData(this)
+        //val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().loadUserData(this@MainActivity, true)
 
         val fabCreateBoard = findViewById<FloatingActionButton>(R.id.fab_create_board)
         fabCreateBoard.setOnClickListener {
-            val intent = Intent(this, CreateBoardActivity::class.java)
+            val intent = Intent(this@MainActivity, CreateBoardActivity::class.java)
             intent.putExtra(Constants.NAME, mUserName)
-            startActivity(intent)
+            startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
+            //startActivity(intent)
         }
 
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            // A double back press function is added in Base Activity.
+            doubleBackToExit()
+        }
+    }
+
+    fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
+        hideProgressDialog()
+        val rvBoardsList = findViewById<RecyclerView>(R.id.rv_boards_list)
+        val tvNoBoardsAvailable = findViewById<TextView>(R.id.tv_no_boards_available)
+
+        if (boardsList.size > 0) {
+            rvBoardsList.visibility = View.VISIBLE
+            tvNoBoardsAvailable.visibility = View.GONE
+
+            rvBoardsList.layoutManager = LinearLayoutManager(this@MainActivity)
+            rvBoardsList.setHasFixedSize(true)
+
+            val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
+            rvBoardsList.adapter = adapter
+        } else {
+            rvBoardsList.visibility = View.GONE
+            tvNoBoardsAvailable.visibility = View.VISIBLE
+        }
     }
 
     private fun setupActionBar() {
@@ -68,7 +107,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 drawerLayout.openDrawer(GravityCompat.START)
             }
         } else {
-            drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+            drawerLayout = findViewById(R.id.drawer_layout)
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START)
             } else {
@@ -85,11 +124,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    fun updateNavigationUserDetails(user: User) {
+    fun updateNavigationUserDetails(user: User, isToReadBoardsList: Boolean) {
+        hideProgressDialog()
         mUserName = user.name
+
         val navUserImage = findViewById<CircleImageView>(R.id.nav_user_image)
         Glide
-            .with(this)
+            .with(this@MainActivity)
             .load(user.image)
             .centerCrop()
             .placeholder(R.drawable.ic_user_place_holder)
@@ -98,19 +139,29 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val tvUserName = findViewById<TextView>(R.id.tv_username)
         tvUserName.text = user.name
 
+        if (isToReadBoardsList) {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            FirestoreClass().getBoardsList(this)
+        }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode == Activity.RESULT_OK && requestCode == MY_PROFILE_REQUEST_CODE) {
             FirestoreClass().loadUserData(this)
+        } else if (resultCode == Activity.RESULT_OK && requestCode == CREATE_BOARD_REQUEST_CODE) {
+
+            FirestoreClass().getBoardsList(this)
+
         } else {
             Log.e("Cancelled", "Cancelled")
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
             R.id.nav_my_profile -> {
                 startActivityForResult(
                     Intent(this, MyProfileActivity::class.java),

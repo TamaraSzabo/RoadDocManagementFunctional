@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.IntroActivity"
-    android:background="@drawable/splashbackground"
+    android:background="@color/background_black"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -25,7 +25,7 @@
         android:layout_marginTop="@dimen/intro_screen_image_marginTop"
         android:layout_marginBottom="@dimen/intro_screen_image_marginBottom"
         android:contentDescription="@string/image_content_description"
-        android:src="@drawable/ic_task_image" />
+        android:src="@drawable/ic_intro_logo_w" />
 
     <TextView
        android:layout_width="wrap_content"

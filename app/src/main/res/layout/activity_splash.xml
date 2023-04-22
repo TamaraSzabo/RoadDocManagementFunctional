@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/splashbackground"
+    android:background="@color/black"
     tools:context=".activities.SplashActivity">
 
-    <TextView
-        android:id="@+id/view_app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="@dimen/splash_screen_title_text_size"
-        android:textStyle="bold" />
+    <ImageView
+        android:layout_width="333dp"
+        android:layout_height="379dp"
+        android:layout_marginTop="@dimen/intro_screen_image_marginTop"
+        android:layout_marginBottom="@dimen/intro_screen_image_marginBottom"
+        android:contentDescription="@string/image_content_description"
+        android:src="@drawable/ic_intro_logo_b" />
+
+
 
 </LinearLayout>

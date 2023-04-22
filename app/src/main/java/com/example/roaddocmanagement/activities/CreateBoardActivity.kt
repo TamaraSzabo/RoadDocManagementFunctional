@@ -21,11 +21,12 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.IOException
 
+@Suppress("DEPRECATION")
 class CreateBoardActivity : BaseActivity() {
     private var mSelectedImageFileUri: Uri? = null
     private lateinit var binding: ActivityCreateBoardBinding
     private lateinit var mUserName: String
-    private var mBoardImageURL : String = ""
+    private var mBoardImageURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +36,7 @@ class CreateBoardActivity : BaseActivity() {
 
 
         if (intent.hasExtra(Constants.NAME)) {
-            mUserName = intent.getStringExtra(Constants.NAME).toString()
+            mUserName = intent.getStringExtra(Constants.NAME)!!
         }
 
         binding.ivBoardImage.setOnClickListener {
@@ -52,9 +53,9 @@ class CreateBoardActivity : BaseActivity() {
             }
         }
         binding.btnCreate.setOnClickListener {
-            if (mSelectedImageFileUri != null){
+            if (mSelectedImageFileUri != null) {
                 uploadBoardImage()
-            }else{
+            } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
                 createBoard()
             }
@@ -62,16 +63,19 @@ class CreateBoardActivity : BaseActivity() {
     }
 
     private fun createBoard() {
-        var board = Board(
+        val assignedUsersArrayList: ArrayList<String> = ArrayList()
+        assignedUsersArrayList.add(getCurrentUserId())
+        val board = Board(
             binding.etBoardName.text.toString(),
             mBoardImageURL,
-            mUserName
+            mUserName,
+            assignedUsersArrayList
         )
 
-        FirestoreClass().createBoard(this, board)
+        FirestoreClass().createBoard(this@CreateBoardActivity, board)
     }
 
-    private fun uploadBoardImage(){
+    private fun uploadBoardImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
@@ -102,6 +106,9 @@ class CreateBoardActivity : BaseActivity() {
 
     fun boardCreatedSuccessfully() {
         hideProgressDialog()
+
+        setResult(Activity.RESULT_OK)
+
         finish()
     }
 

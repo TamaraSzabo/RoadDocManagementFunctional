@@ -13,6 +13,8 @@
     <color name="primary_text_color">#86a09d</color>
     <color name="secondary_text_color">#f1fffa</color>
     <color name="snackbar_error_color">#F72400</color>
+    <color name="background_black">#313334</color>
+    <color name="divider_color">#EAEAEA</color>
 
 
 </resources>

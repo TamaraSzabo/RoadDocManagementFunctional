@@ -26,7 +26,6 @@ import java.io.IOException
 class MyProfileActivity : BaseActivity() {
     private lateinit var binding: ActivityMyProfileBinding
 
-
     private var mSelectedImageFileUri: Uri? = null
     private var mProfileImageURL: String = ""
     private lateinit var mUserDetails: User
