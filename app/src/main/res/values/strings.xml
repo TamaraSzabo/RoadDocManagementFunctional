@@ -34,8 +34,19 @@
     <string name="board_name">Board Name</string>
     <string name="floating_add_button">Floating ADD button</string>
     <string name="image_contentDescription" />
-    
+
     <string name="no_boards_available">No Boards are available!!!</string>
+
+    <string name="action_add_doc_type">Add Document Type (Auto/Personal)</string>
+    <string name="hint_doc_type">Document Type</string>
+    <string name="action_add_document">Add Document</string>
+    <string name="hint_document_name">Document Name</string>
+    <string name="image_contentDescription_done_edit_list">done edit list</string>
+    <string name="image_contentDescription_X_doc_type_button">X car name</string>
+    <string name="image_contentDescription_X_image_button">X image button</string>
+    <string name="image_contentDescription_pencil_doc_type">pencil car name</string>
+    <string name="image_contentDescription_delete_doc_type_button">"delete car name "</string>
+    <string name="image_contentDescription_select_photo">Select photo from gallery</string>
 
 
 </resources>

@@ -23,7 +23,10 @@ import java.io.IOException
 
 @Suppress("DEPRECATION")
 class CreateBoardActivity : BaseActivity() {
-    private var mSelectedImageFileUri: Uri? = null
+    lateinit var storageReference: StorageReference
+    //?
+    var firestoreClass: FirestoreClass? = null
+    var mSelectedImageFileUri: Uri? = null
     private lateinit var binding: ActivityCreateBoardBinding
     private lateinit var mUserName: String
     private var mBoardImageURL: String = ""
@@ -62,7 +65,7 @@ class CreateBoardActivity : BaseActivity() {
         }
     }
 
-    private fun createBoard() {
+    fun createBoard() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(getCurrentUserId())
         val board = Board(
@@ -75,7 +78,7 @@ class CreateBoardActivity : BaseActivity() {
         FirestoreClass().createBoard(this@CreateBoardActivity, board)
     }
 
-    private fun uploadBoardImage() {
+    fun uploadBoardImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
@@ -149,7 +152,7 @@ class CreateBoardActivity : BaseActivity() {
 
 
     @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK
             && requestCode == Constants.PICK_IMAGE_REQUEST_CODE

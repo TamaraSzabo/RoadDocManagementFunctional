@@ -76,4 +76,27 @@
     <dimen name="item_board_divider_marginTop">5dp</dimen>
     <dimen name="item_board_divider_height">0.3dp</dimen>
 
+    <dimen name="task_list_content_padding">10dp</dimen>
+
+    <dimen name="doc_type_cv_elevation">5dp</dimen>
+    <dimen name="doc_type_add_item_text_padding">12dp</dimen>
+    <dimen name="doc_type_add_item_text_size">18sp</dimen>
+    <dimen name="doc_type_cv_margin">5dp</dimen>
+    <dimen name="doc_type_cv_corner_radius">5dp</dimen>
+    <dimen name="doc_type_image_buttons_padding">10dp</dimen>
+    <dimen name="doc_type_title_view_elevation">10dp</dimen>
+    <dimen name="doc_type_title_text_padding">10dp</dimen>
+    <dimen name="doc_type_title_text_size">16sp</dimen>
+    <dimen name="doc_type_divider_height">0.5dp</dimen>
+    <dimen name="doc_type_rv_card_list_margin">5dp</dimen>
+    <dimen name="doc_type_add_card_text_elevation">10dp</dimen>
+
+    <dimen name="item_document_content_margin">8dp</dimen>
+    <dimen name="item_document_cv_elevation">5dp</dimen>
+    <dimen name="item_document_label_height">15dp</dimen>
+    <dimen name="item_document_name_text_padding">10dp</dimen>
+    <dimen name="item_document_name_text_size">16sp</dimen>
+    <dimen name="item_document_members_text_padding">10dp</dimen>
+    <dimen name="item_document_members_text_size">14sp</dimen>
+
 </resources>

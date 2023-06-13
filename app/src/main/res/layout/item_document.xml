@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/doc_type_cv_elevation"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_label_color"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_document_label_height"
+            android:visibility="gone"
+            tools:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_document_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/item_document_name_text_padding"
+            android:textSize="@dimen/item_document_name_text_size"
+            tools:text="Card Name" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

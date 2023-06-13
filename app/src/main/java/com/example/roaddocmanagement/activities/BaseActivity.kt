@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 open class BaseActivity : AppCompatActivity() {
 
     private var doubleBackToExitPressedOnce = false
-    private lateinit var mProgressDialog: Dialog
+    lateinit var mProgressDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
