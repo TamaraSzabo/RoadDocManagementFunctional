@@ -17,6 +17,10 @@
         android:theme="@style/Theme.RoadDocManagement"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".activities.DocumentDetailsActivity"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".activities.DocListActivity"
             android:screenOrientation="fullSensor"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

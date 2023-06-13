@@ -48,5 +48,11 @@
     <string name="image_contentDescription_delete_doc_type_button">"delete car name "</string>
     <string name="image_contentDescription_select_photo">Select photo from gallery</string>
 
+    <string name="due_date">Expiration Date</string>
+    <string name="select_due_date">Select Expiration Date</string>
+
+    <string name="delete_document">Delete Document</string>
+
+
 
 </resources>

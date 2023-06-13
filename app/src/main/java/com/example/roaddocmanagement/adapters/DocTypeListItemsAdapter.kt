@@ -50,7 +50,8 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
      * layout file.
      */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val model = list[position]
+        val adapterPosition = holder.adapterPosition
+        val model = list[adapterPosition]
 
         if (holder is MyViewHolder) {
             val itemView = holder.itemView
@@ -63,7 +64,7 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
             val etDocTypeName = itemView.findViewById<EditText>(R.id.et_doc_type_name)
             val tvDocTypeTitle = itemView.findViewById<TextView>(R.id.tv_doc_type_title)
 
-            if (position == list.size - 1) {
+            if (adapterPosition == list.size - 1) {
                 tvAddDocTypeList.visibility = View.VISIBLE
                 llDocTypeItem.visibility = View.GONE
             } else {
@@ -126,7 +127,7 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
 
                 if (docTypeListName.isNotEmpty()) {
                     if (context is DocListActivity) {
-                        context.updateDocTypeList(position, docTypeListName, model)
+                        context.updateDocTypeList(adapterPosition, docTypeListName, model)
                     }
                 } else {
                     Toast.makeText(
@@ -137,7 +138,7 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
 
             val ibDeleteList = itemView.findViewById<ImageButton>(R.id.ib_delete_list)
             ibDeleteList.setOnClickListener {
-                alertDialogForDeleteDocTypeList(position, model.title)
+                alertDialogForDeleteDocTypeList(adapterPosition, model.title)
             }
 
             //Add a click event for adding a document in the doc type list
@@ -164,7 +165,7 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
                     val docName = etDocName.text.toString()
                     if (this.context is DocListActivity) {
                         if (docName.isNotEmpty()) {
-                            this.context.selectImageFromGallery(position, docName)
+                            this.context.selectImageFromGallery(adapterPosition, docName)
 
                         }
                     }
@@ -177,7 +178,7 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
                         if (context is DocListActivity) {
                             val imageUrl = context.getImageURL()
 
-                            context.addDocumentToDocTypeList(position, docName, imageUrl)
+                            context.addDocumentToDocTypeList(adapterPosition, docName, imageUrl)
                         }
                     } else {
                         Toast.makeText(context, "Please Enter Document Details", Toast.LENGTH_SHORT)
@@ -193,6 +194,16 @@ open class DocTypeListItemsAdapter(private val context: Context, private var lis
 
             val adapter = DocumentListItemsAdapter(context, model.documents)
             rvDocList.adapter = adapter
+
+            adapter.setOnClickListener(
+                object : DocumentListItemsAdapter.OnClickListener{
+                    override fun onClick(documentPosition: Int) {
+                        if (context is DocListActivity){
+                            context.documentDetails(adapterPosition, documentPosition)
+                        }
+                    }
+                }
+            )
         }
     }
 

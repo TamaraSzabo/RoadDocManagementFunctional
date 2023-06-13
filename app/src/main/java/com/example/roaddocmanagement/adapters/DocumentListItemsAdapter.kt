@@ -38,6 +38,12 @@ open class DocumentListItemsAdapter(
         if (holder is MyViewHolder) {
 
             tvDocumentName.text = model.name
+
+            holder.itemView.setOnClickListener {
+                if (onClickListener != null){
+                    onClickListener!!.onClick(position)
+                }
+            }
         }
     }
 
@@ -47,6 +53,10 @@ open class DocumentListItemsAdapter(
 
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener{
+        fun onClick(position: Int)
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)

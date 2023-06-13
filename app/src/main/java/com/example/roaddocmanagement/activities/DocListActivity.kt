@@ -34,25 +34,27 @@ class DocListActivity : BaseActivity() {
     private var mSelectedImageFileUriDoc: Uri? = null
     private var mDocImageURL: String = ""
     private var mDocImageURL2: String = ""
+    private lateinit var mBoardDocumentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDocListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var boardDocumentId = ""
+
         if (intent.hasExtra(Constants.DOCUMENT_ID)) {
-            boardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
+            mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
         }
 
         showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().getBoardDetails(this, boardDocumentId)
+        FirestoreClass().getBoardDetails(this, mBoardDocumentId)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == Constants.PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK ) {
+
             if (data != null) {
                 try {
                     mSelectedImageFileUriDoc = data.data
@@ -63,42 +65,14 @@ class DocListActivity : BaseActivity() {
                 }
             }
         }
+        if (requestCode == DOCUMENT_DETAILS_REQUEST_CODE)
+        {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            FirestoreClass().getBoardDetails(this@DocListActivity, mBoardDocumentId)
+        }else{
+            Log.e("Cancelled", "Cancelled")
+        }
     }
-
-    //Creating an adapter and layout manager for the RecycleView
-/*
-     private fun getPhotoList(): List<Doc>{ //PhotoItem
-         val photoList = mutableListOf<Doc>()
-
-         return photoList
-     }
-
-     private inner class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-         private val photoImageView: ImageView = itemView.findViewById(R.id.photoImageView)
-
-         fun bind(doc: Doc){
-             Glide.with(itemView)
-                 .load(doc.photoUrl)
-                 .into(photoImageView)
-         }
-     }
-*/
-
-//     private inner class PhotoAdapter(private val photoList: List<Doc>) : RecyclerView.Adapter<PhotoViewHolder>(){
-//         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
-//             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_photo,parent,false)
-//             return PhotoViewHolder(itemView)
-//         }
-//
-//         override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-//             val photoItem = photoList[position]
-//             holder.bind(photoItem)
-//         }
-//
-//         override fun getItemCount(): Int {
-//             return photoList.size
-//         }
-//     }
 
     private fun setupActionBar() {
         setSupportActionBar(binding.toolbarDocListActivity)
@@ -172,28 +146,6 @@ class DocListActivity : BaseActivity() {
         FirestoreClass().addUpdateDocTypeList(this@DocListActivity, mBoardDetails)
     }
 
-    /*override fun onrequestpermissionsresult(
-        requestcode: int,
-        permissions: array<out string>,
-        grantresults: intarray
-    ) {
-        super.onrequestpermissionsresult(requestcode, permissions, grantresults)
-        if (requestcode == constants.read_storage_permission_code) {
-            if (grantresults.isnotempty()
-                && grantresults[0] == packagemanager.permission_granted
-            ) {
-                constants.showimagechooser(this)
-            }
-        } else {
-            toast.maketext(
-                this,
-                "oops, you just denied the permission for the storage. ",
-                toast.length_long
-            ).show()
-        }
-    }*/
-
-//TODO: When the add image button is clicked , it's not working
     private fun uploadDocImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
@@ -253,7 +205,7 @@ class DocListActivity : BaseActivity() {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             Constants.showImageChooser(this)
-            uploadDocImage()
+           // uploadDocImage()
 
         } else {
             ActivityCompat.requestPermissions(
@@ -284,6 +236,19 @@ class DocListActivity : BaseActivity() {
 
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateDocTypeList(this@DocListActivity, mBoardDetails)
+    }
+
+    //A function for viewing and updating document details
+    fun documentDetails(docTypeListPosition: Int, documentPosition: Int){
+        val intent = Intent(this,DocumentDetailsActivity::class.java)
+        intent.putExtra(Constants.BOARD_DETAIL,mBoardDetails)
+        intent.putExtra(Constants.DOC_TYPE_LIST_ITEM_POSITION,docTypeListPosition)
+        intent.putExtra(Constants.DOCUMENT_LIST_ITEM_POSITION,documentPosition)
+        startActivityForResult(intent, DOCUMENT_DETAILS_REQUEST_CODE)
+    }
+
+    companion object{
+        const val DOCUMENT_DETAILS_REQUEST_CODE: Int = 14
     }
 
 }
