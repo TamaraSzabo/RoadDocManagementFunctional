@@ -10,18 +10,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/tv_add_doc_type_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/task_list_action_color"
+            android:background="@color/colorPrimary"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
-            android:text="@string/action_add_doc_type"
             android:padding="@dimen/doc_type_add_item_text_padding"
-            android:textColor="@color/colorAccent"
+            android:text="@string/action_add_doc_type"
+            android:textColor="@color/black"
             android:textSize="@dimen/doc_type_add_item_text_size"
             android:visibility="gone"
             tools:visibility="visible" />
@@ -40,13 +41,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@color/colorPrimary">
 
                 <ImageButton
                     android:id="@+id/ib_close_list_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimary"
                     android:contentDescription="@string/image_contentDescription_X_doc_type_button"
                     android:padding="@dimen/doc_type_image_buttons_padding"
                     android:src="@drawable/ic_cancel" />
@@ -56,6 +58,7 @@
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1"
+                    android:textColor="@color/white"
                     android:autofillHints="@string/hint_doc_type"
                     android:hint="@string/hint_doc_type"
                     android:inputType="text" />
@@ -64,7 +67,7 @@
                     android:id="@+id/ib_done_list_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@color/colorPrimary"
                     android:contentDescription="@string/image_contentDescription_done_edit_list"
                     android:padding="@dimen/doc_type_image_buttons_padding"
                     android:src="@drawable/ic_done" />
@@ -75,7 +78,7 @@
             android:id="@+id/ll_doc_type_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/task_list_action_color"
+            android:background="@color/background_black"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:visibility="gone"
@@ -85,7 +88,7 @@
                 android:id="@+id/ll_title_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/task_list_title_view_bg_color"
+                android:background="@color/background_black"
                 android:elevation="@dimen/doc_type_title_view_elevation"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -175,6 +178,7 @@
                 android:id="@+id/rv_doc_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
                 android:layout_margin="@dimen/doc_type_rv_card_list_margin" />
 
             <androidx.cardview.widget.CardView
@@ -242,13 +246,13 @@
                 android:id="@+id/tv_add_doc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/task_list_action_color"
+                android:background="@drawable/shape_button_rounded"
                 android:elevation="@dimen/doc_type_add_card_text_elevation"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:padding="@dimen/doc_type_add_item_text_padding"
                 android:text="@string/action_add_document"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:textSize="@dimen/doc_type_add_item_text_size"
                 tools:visibility="visible" />
         </LinearLayout>

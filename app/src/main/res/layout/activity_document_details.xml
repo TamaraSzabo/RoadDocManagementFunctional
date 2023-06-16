@@ -23,7 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_background"
+        android:background="@color/background_black"
         android:orientation="vertical"
         android:padding="@dimen/document_details_content_padding">
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/document_details_members_label_marginTop"
                     android:text="@string/due_date"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/document_details_label_text_size" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_marginTop="@dimen/document_details_value_marginTop"
                     android:padding="@dimen/document_details_value_padding"
                     android:text="@string/select_due_date"
-                    android:textColor="@color/primary_text_color" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/btn_update_document_details"
@@ -108,7 +108,7 @@
                     android:paddingTop="@dimen/btn_paddingTopBottom"
                     android:paddingBottom="@dimen/btn_paddingTopBottom"
                     android:text="@string/update"
-                    android:textColor="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:textSize="@dimen/btn_text_size" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
