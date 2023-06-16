@@ -52,7 +52,11 @@
     <string name="select_due_date">Select Expiration Date</string>
 
     <string name="delete_document">Delete Document</string>
-
+    <string name="alert">Alert</string>
+    <string name="confirmation_message_to_delete_card">Are you sure you want to delete document \'%1$s\'?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="default_notification_channel_id">roadDocManagement_notification_channel_id</string>
 
 
 </resources>

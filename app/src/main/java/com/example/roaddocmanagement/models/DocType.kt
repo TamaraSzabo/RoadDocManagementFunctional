@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class DocType (
     var title : String="",
     val createdBy: String = "",
-    val documents: ArrayList<Document> = ArrayList()
+    var documents: ArrayList<Document> = ArrayList()
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

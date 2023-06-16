@@ -20,6 +20,9 @@ object Constants {
     const val BOARD_DETAIL: String = "board_detail"
     const val DOC_TYPE_LIST_ITEM_POSITION: String = "doc_type_list_item_position"
     const val DOCUMENT_LIST_ITEM_POSITION: String = "document_list_item_position"
+    const val ROADDOCMANAGEMENT_PREFERENCES = "roadDocManagementPreferences"
+    const val FCM_TOKEN_UPDATED = "fcmTokenUpdated"
+    const val FCM_TOKEN = "fcmToken"
 
     const val READ_STORAGE_PERMISSION_CODE = 1
     const val PICK_IMAGE_REQUEST_CODE = 2

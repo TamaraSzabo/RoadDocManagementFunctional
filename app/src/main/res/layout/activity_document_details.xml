@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_card_details_activity"
+            android:id="@+id/toolbar_document_details_activity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_name_card_details"
+                        android:id="@+id/et_name_document_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_document_name"
@@ -88,7 +88,7 @@
                     android:textSize="@dimen/document_details_label_text_size" />
 
                 <TextView
-                    android:id="@+id/tv_select_due_date"
+                    android:id="@+id/tv_select_expiration_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/document_details_value_marginTop"
@@ -97,7 +97,7 @@
                     android:textColor="@color/primary_text_color" />
 
                 <Button
-                    android:id="@+id/btn_update_card_details"
+                    android:id="@+id/btn_update_document_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

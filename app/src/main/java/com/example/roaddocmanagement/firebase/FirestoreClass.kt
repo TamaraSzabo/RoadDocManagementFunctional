@@ -59,16 +59,32 @@ class FirestoreClass {
 
     }
 
-    fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .update(userHashMap)
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
                 Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
-                activity.profileUpdateSuccess()
+                when (activity) {
+                    is MainActivity -> {
+                        activity.tokenUpdateSuccess()
+                    }
+                    is MyProfileActivity -> {
+                        activity.profileUpdateSuccess()
+                    }
+                }
+
             }.addOnFailureListener { e ->
-                activity.hideProgressDialog()
+                when (activity) {
+                    is MainActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is MyProfileActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while creating a board.",
@@ -99,7 +115,8 @@ class FirestoreClass {
                 )
             }*/
         //v2:
-        val documentRef = mFireStore.collection(Constants.BOARDS).document() // Generate a new document reference
+        val documentRef =
+            mFireStore.collection(Constants.BOARDS).document() // Generate a new document reference
         val documentId = documentRef.id // Get the generated document ID
 
         board.documentId = documentId // Assign the generated ID to the board
@@ -158,7 +175,7 @@ class FirestoreClass {
 
     }
 
-    fun addUpdateDocTypeList(activity: DocListActivity, board: Board) {
+    fun addUpdateDocTypeList(activity: Activity, board: Board) {
         val docTypeListHashMap = HashMap<String, Any>()
         docTypeListHashMap[Constants.DOC_TYPE_LIST] = board.docTypeList
 
@@ -167,10 +184,15 @@ class FirestoreClass {
             .update(docTypeListHashMap)
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "DocTypeList updated successfully")
-
-                activity.addUpdateDocListSuccess()
+                if (activity is DocListActivity)
+                    activity.addUpdateDocListSuccess()
+                else if (activity is DocumentDetailsActivity)
+                    activity.addUpdateDocListSuccess()
             }.addOnFailureListener { exception ->
-                activity.hideProgressDialog()
+                if (activity is DocListActivity)
+                    activity.hideProgressDialog()
+                else if (activity is DocumentDetailsActivity)
+                    activity.hideProgressDialog()
                 Log.e(
                     activity.javaClass.simpleName,
                     "DocTypeList not updated successfully",
@@ -188,4 +210,5 @@ class FirestoreClass {
         }
         return currentUserId
     }
+
 }
