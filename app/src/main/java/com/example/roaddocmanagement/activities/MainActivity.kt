@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.*
 import com.bumptech.glide.Glide
 import com.example.roaddocmanagement.R
 import com.example.roaddocmanagement.adapters.BoardItemsAdapter
@@ -20,11 +21,13 @@ import com.example.roaddocmanagement.firebase.FirestoreClass
 import com.example.roaddocmanagement.models.Board
 import com.example.roaddocmanagement.models.User
 import com.example.roaddocmanagement.utils.Constants
+import com.example.roaddocmanagement.workers.ExpirationCheckWorker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.concurrent.TimeUnit
 
 
 @Suppress("DEPRECATION")
@@ -70,6 +73,23 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE)
             //startActivity(intent)
         }
+
+        // Create a Constraints object to define the work requirements
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        // Create a periodic work request to run the ExpirationCheckWorker every 24 hours
+        val workRequest = PeriodicWorkRequestBuilder<ExpirationCheckWorker>(1, TimeUnit.DAYS)
+            .setConstraints(constraints)
+            .build()
+
+        // Enqueue the work request
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "ExpirationCheckWorker",
+            ExistingPeriodicWorkPolicy.KEEP,
+            workRequest
+        )
 
     }
 

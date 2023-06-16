@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.example.roaddocmanagement"
         minSdk 24
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.test.ext:junit-ktx:1.1.5'
 
     implementation 'com.google.firebase:firebase-messaging:20.1.1'
+    implementation 'androidx.work:work-runtime-ktx:2.8.0'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:3.11.2'

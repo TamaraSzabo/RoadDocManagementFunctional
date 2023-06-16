@@ -1,15 +1,24 @@
 package com.example.roaddocmanagement.firebase
 
 import android.app.Activity
+import android.app.Notification
+import android.content.Context
+import android.os.Message
 import android.util.Log
 import android.widget.Toast
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.roaddocmanagement.activities.*
 import com.example.roaddocmanagement.models.Board
 import com.example.roaddocmanagement.models.User
 import com.example.roaddocmanagement.utils.Constants
+import com.example.roaddocmanagement.workers.ExpirationCheckWorker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.messaging.FirebaseMessaging
+import java.util.concurrent.TimeUnit
 
 class FirestoreClass {
     private val mFireStore = FirebaseFirestore.getInstance()
@@ -96,25 +105,7 @@ class FirestoreClass {
     }
 
     fun createBoard(activity: CreateBoardActivity, board: Board) {
-        /*mFireStore.collection(Constants.BOARDS)
-            .document()
-            .set(board, SetOptions.merge())
-            .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "Board created successfully.")
-                Toast.makeText(
-                    activity,
-                    "Board created successfully.", Toast.LENGTH_SHORT
-                ).show()
-                activity.boardCreatedSuccessfully()
-            }.addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while creating a board.",
-                    e
-                )
-            }*/
-        //v2:
+
         val documentRef =
             mFireStore.collection(Constants.BOARDS).document() // Generate a new document reference
         val documentId = documentRef.id // Get the generated document ID
